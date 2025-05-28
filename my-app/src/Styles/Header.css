@@ -1,0 +1,107 @@
+/* Глобальные переменные для цветов */
+:root {
+  --zoro-green: #1A3A2F;
+  --zoro-dark: #0D1F18;
+  --zoro-blood: #8B0000;
+  --zoro-text: #E8E8E8;
+}
+
+/* Базовые стили хедера */
+.header-container {
+  background: linear-gradient(to right, var(--zoro-green) 0%, var(--zoro-dark) 100%);
+  padding: 1.5rem;
+  border-bottom: 3px solid var(--zoro-blood);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Текстура "грязной бумаги" */
+.header-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/black-paper.png");
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Кровавые капли */
+.blood-drop {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--zoro-blood);
+  border-radius: 50%;
+  filter: blur(1px);
+  z-index: 1;
+}
+
+/* Заголовок */
+.header-title {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--zoro-text);
+  text-shadow: 2px 2px 4px #000, 0 0 10px var(--zoro-blood);
+  letter-spacing: 0.3rem;
+  margin: 0;
+  font-size: 3rem;
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+.title-slash {
+  color: var(--zoro-blood);
+  margin: 0 0.5rem;
+}
+
+/* Навигация */
+.header-nav {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  z-index: 2;
+}
+
+.nav-link {
+  color: var(--zoro-text);
+  font-family: 'Noto Sans JP', sans-serif;
+  text-decoration: none;
+  position: relative;
+  font-weight: 500;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--zoro-blood);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+}
+
+.link-en {
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  color: rgba(232, 232, 232, 0.7);
+}
+@media (max-width: 768px) {
+  .header-title { font-size: 2rem; }
+  .header-nav { gap: 1rem; }
+}
