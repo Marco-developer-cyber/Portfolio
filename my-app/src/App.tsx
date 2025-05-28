@@ -1,12 +1,14 @@
 import './App.css'
-import {BrowserRouter} from 'react-router-dom'
-import { Header } from './Components/Hedaer'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import Menu from './Menu'
 
 function App() {
 
   return (
     <BrowserRouter>
-     <Header/>
+    <Routes>
+      <Route path="/" element={<Menu />} />
+    </Routes>
     </BrowserRouter>
   )
 }

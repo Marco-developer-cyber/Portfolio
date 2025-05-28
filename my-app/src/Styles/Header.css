@@ -1,15 +1,16 @@
-/* Глобальные переменные для цветов */
+/* Global variables */
 :root {
   --zoro-green: #1A3A2F;
   --zoro-dark: #0D1F18;
   --zoro-blood: #8B0000;
   --zoro-text: #E8E8E8;
+  --header-padding: 1.5rem;
 }
 
-/* Базовые стили хедера */
+/* Base styles */
 .header-container {
   background: linear-gradient(to right, var(--zoro-green) 0%, var(--zoro-dark) 100%);
-  padding: 1.5rem;
+  padding: var(--header-padding);
   border-bottom: 3px solid var(--zoro-blood);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
   position: relative;
@@ -17,7 +18,7 @@
   font-family: 'Bebas Neue', sans-serif;
 }
 
-/* Текстура "грязной бумаги" */
+/* Background texture */
 .header-container::before {
   content: "";
   position: absolute;
@@ -31,7 +32,25 @@
   z-index: 0;
 }
 
-/* Кровавые капли */
+/* LOgo,, */
+.header-logo {
+  margin-top: 60px;
+  margin-left: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  width:50%;
+  height: 10px;
+  z-index: 2;
+}
+.header-logo img {
+  width: 8vw !important;
+  height: 16vh !important;
+  max-width: 200px; /* Adjust as needed */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+/* Blood drops (screen-wide) */
 .blood-drop {
   position: absolute;
   width: 8px;
@@ -39,28 +58,107 @@
   background: var(--zoro-blood);
   border-radius: 50%;
   filter: blur(1px);
-  z-index: 1;
-}
-
-/* Заголовок */
-.header-title {
-  font-family: 'Bebas Neue', sans-serif;
-  color: var(--zoro-text);
-  text-shadow: 2px 2px 4px #000, 0 0 10px var(--zoro-blood);
-  letter-spacing: 0.3rem;
-  margin: 0;
-  font-size: 3rem;
-  position: relative;
-  display: inline-block;
   z-index: 2;
 }
 
+/* Header (title + burger) */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.header-title a {
+  color: var(--zoro-text) !important;
+  text-shadow: 2px 2px 4px #000, 0 0 10px var(--zoro-blood) !important;
+  letter-spacing: 0.3rem;
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  position: relative;
+  display: inline-block;
+  z-index: 3;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.header-title a:hover {
+  color: var(--zoro-blood) !important;
+  text-shadow: 2px 2px 4px #000, 0 0 10px rgba(139, 0, 0, 0.8) !important;
+}
+
+.header-title a:hover .header-title span {
+  color: var(--zoro-text);
+  /* transition: color 0.3s; */
+}
+
+/* Blood drip effect over text */
+.blood-drip-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* Below text, above background */
+  overflow: hidden;
+}
+
+.blood-drip {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--zoro-blood);
+  filter: url(#blood-goo);
+}
+
+.blood-drip-1 {
+  clip-path: polygon(0 0, 15% 10%, 25% 0, 35% 15%, 45% 5%, 55% 20%, 65% 10%, 75% 25%, 85% 15%, 95% 5%, 100% 20%, 100% 100%, 0 100%);
+}
+
+.blood-drip-2 {
+  clip-path: polygon(5% 0, 20% 15%, 30% 5%, 40% 20%, 50% 10%, 60% 25%, 70% 15%, 80% 5%, 90% 20%, 100% 10%, 100% 100%, 0 100%);
+  opacity: 0.8;
+}
+
+.blood-drip-3 {
+  clip-path: polygon(10% 0, 25% 5%, 35% 20%, 45% 10%, 55% 5%, 65% 20%, 75% 15%, 85% 25%, 95% 10%, 100% 5%, 100% 100%, 0 100%);
+  opacity: 0.7;
+}
+
+/* SVG filter for gooey effect */
+svg.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Title slash */
 .title-slash {
   color: var(--zoro-blood);
   margin: 0 0.5rem;
 }
 
-/* Навигация */
+/* Burger menu (mobile) */
+.burger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 10;
+}
+
+.burger-line {
+  width: 25px;
+  height: 2px;
+  background: var(--zoro-text);
+  transition: all 0.3s ease;
+}
+
+/* Navigation (desktop) */
 .header-nav {
   display: flex;
   gap: 2rem;
@@ -74,11 +172,10 @@
   text-decoration: none;
   position: relative;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 2;
 }
 
 .nav-link::before {
@@ -101,7 +198,162 @@
   margin-top: 0.2rem;
   color: rgba(232, 232, 232, 0.7);
 }
+
+/* Mobile menu */
+.mobile-nav {
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  background: rgba(13, 31, 24, 0.9);
+  margin-top: 1rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.mobile-nav-link {
+  color: var(--zoro-text);
+  text-decoration: none;
+  padding: 1rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobile-nav-link span {
+  color: rgba(232, 232, 232, 0.7);
+  font-size: 0.9rem;
+}
+
+/* Slash effect */
+.slash-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg,
+      transparent 45%,
+      var(--zoro-blood) 50%,
+      transparent 55%);
+  z-index: 100;
+  pointer-events: none;
+  transform-origin: left;
+}
+
+/* Стили для свитка */
+.quote-scroll {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%238B0000" stroke-width="2" rx="5"/></svg>') center/cover no-repeat;
+  padding: 2rem 1.5rem;
+  z-index: 5;
+  transition: 0.4s;
+}
+
+.scroll-text {
+  background: rgba(26, 58, 47, 0.7);
+  padding: 1.5rem;
+  border-radius: 3px;
+  position: relative;
+}
+
+.scroll-text::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #238B0000, transparent);
+}
+
+.jp-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #E8E8E8;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.en-text {
+  font-family: 'Bebas Neue', sans-serif;
+  color: rgba(232, 232, 232, 0.8);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+/* Декоративные "концы" свитка */
+.scroll-ends {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: rgba(139, 0, 0, 0.3);
+}
+
+.scroll-ends::before,
+.scroll-ends::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 10px;
+  background: #1A3A2F;
+  border: 1px solid #238B0000;
+}
+
+.scroll-ends::before {
+  top: -5px;
+  left: -15px;
+}
+
+.scroll-ends::after {
+  bottom: -5px;
+  left: -15px;
+}
+
+.quote-scroll:hover {
+  animation: sway 3s ease-in-out infinite;
+}
+
+@keyframes sway {
+
+  0%,
+  100% {
+    transform: translateY(-50%) rotate(0.5deg);
+  }
+
+  50% {
+    transform: translateY(-50%) rotate(-0.5deg);
+  }
+}
+
+/* Media queries */
 @media (max-width: 768px) {
-  .header-title { font-size: 2rem; }
-  .header-nav { gap: 1rem; }
+  .header-container {
+    padding: 1rem;
+  }
+
+  .header-nav:not(.mobile-nav) {
+    display: none;
+  }
+
+  .blood-drop {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+
+  .burger-button,
+  .mobile-menu {
+    display: none !important;
+  }
 }
