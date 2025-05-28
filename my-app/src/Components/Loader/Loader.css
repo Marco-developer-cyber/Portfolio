@@ -1,0 +1,155 @@
+/* Define fallback variables if not present in global scope */
+:root {
+  --zoro-dark: #0D1F18;
+  --zoro-green: #1A3A2F;
+  --zoro-blood: #8B0000;
+  --zoro-text: #E8E8E8;
+}
+
+/* Loader container */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, var(--zoro-dark, #0D1F18) 0%, var(--zoro-green, #1A3A2F) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+/* Background texture with fallback */
+.loader-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/black-paper.png") repeat;
+  background-color: var(--zoro-dark, #0D1F18); /* Fallback if texture fails */
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Swords container */
+.loader-swords {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Individual swords */
+.sword {
+  position: absolute;
+  width: 80px;
+  height: 6px;
+  background: linear-gradient(to right, var(--zoro-text, #E8E8E8) 60%, var(--zoro-blood, #8B0000));
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+}
+
+.sword-1 { transform: rotate(0deg); }
+.sword-2 { transform: rotate(120deg); }
+.sword-3 { transform: rotate(240deg); }
+
+/* Slash effect */
+.slash-effect {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(45deg, transparent 45%, var(--zoro-blood, #8B0000) 50%, transparent 55%);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+/* Text (Japanese + English) */
+.loader-text {
+  position: absolute;
+  bottom: 20%;
+  text-align: center;
+  z-index: 3;
+}
+
+.jp-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500; /* Fallback if font fails */
+  color: var(--zoro-text, #E8E8E8);
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  text-shadow: 2px 2px 4px #000, 0 0 10px var(--zoro-blood, #8B0000);
+  position: relative;
+  overflow: hidden;
+}
+
+.en-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400; /* Fallback if font fails */
+  color: rgba(232, 232, 232, 0.8);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  letter-spacing: 2px;
+  margin-top: 0.5rem;
+}
+
+/* Ink reveal effect for text */
+.jp-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, var(--zoro-dark, #0D1F18) 50%, transparent 100%);
+  animation: inkReveal 1.5s ease-in forwards;
+}
+
+@keyframes inkReveal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Blood drip effect */
+.blood-drip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--zoro-blood, #8B0000);
+  clip-path: polygon(0 0, 15% 10%, 25% 0, 35% 15%, 45% 5%, 55% 20%, 65% 10%, 75% 25%, 85% 15%, 95% 5%, 100% 20%, 100% 100%, 0 100%);
+  opacity: 0.6;
+  z-index: 1;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .loader-swords {
+    width: 60px;
+    height: 60px;
+  }
+
+  .sword {
+    width: 50px;
+    height: 4px;
+  }
+
+  .slash-effect {
+    width: 100px;
+    height: 100px;
+  }
+
+  .jp-text {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .en-text {
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+  }
+}

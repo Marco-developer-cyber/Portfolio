@@ -32,24 +32,26 @@
   z-index: 0;
 }
 
-/* LOgo,, */
+/* Logo */
 .header-logo {
+  display: none; /* Hidden by default */
   margin-top: 60px;
   margin-left: 20%;
-  display: flex;
   justify-content: center;
   align-items: center;
   transform: translate(-50%, -50%);
-  width:50%;
+  width: 50%;
   height: 10px;
   z-index: 2;
 }
+
 .header-logo img {
   width: 8vw !important;
   height: 16vh !important;
-  max-width: 200px; /* Adjust as needed */
+  max-width: 200px;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
 }
+
 /* Blood drops (screen-wide) */
 .blood-drop {
   position: absolute;
@@ -87,9 +89,8 @@
   text-shadow: 2px 2px 4px #000, 0 0 10px rgba(139, 0, 0, 0.8) !important;
 }
 
-.header-title a:hover .header-title span {
+.header-title a:hover .title-slash {
   color: var(--zoro-text);
-  /* transition: color 0.3s; */
 }
 
 /* Blood drip effect over text */
@@ -100,7 +101,6 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  /* Below text, above background */
   overflow: hidden;
 }
 
@@ -164,8 +164,10 @@ svg.defs {
   gap: 2rem;
   margin-top: 1rem;
   z-index: 2;
+  justify-content: flex-start; /* Align nav links to the left */
 }
 
+/* Navigation links */
 .nav-link {
   color: var(--zoro-text);
   font-family: 'Noto Sans JP', sans-serif;
@@ -236,26 +238,42 @@ svg.defs {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg,
-      transparent 45%,
-      var(--zoro-blood) 50%,
-      transparent 55%);
+  background: linear-gradient(45deg, transparent 45%, var(--zoro-blood) 50%, transparent 55%);
   z-index: 100;
   pointer-events: none;
   transform-origin: left;
 }
 
-/* Стили для свитка */
+/* Scroll with quotes */
 .quote-scroll {
   position: absolute;
   right: 5%;
   top: 50%;
   transform: translateY(-50%);
   width: 280px;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%238B0000" stroke-width="2" rx="5"/></svg>') center/cover no-repeat;
+  background: url('https://www.transparenttextures.com/patterns/rice-paper-2.png');
+  background-size: cover;
   padding: 2rem 1.5rem;
+  border: 3px solid var(--zoro-blood);
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(139, 0, 0, 0.3);
   z-index: 5;
+  backdrop-filter: blur(3px);
   transition: 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quote-scroll::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(139, 0, 0, 0.2));
+  z-index: -1;
 }
 
 .scroll-text {
@@ -272,15 +290,18 @@ svg.defs {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #238B0000, transparent);
+  background: linear-gradient(90deg, transparent, var(--zoro-blood), transparent);
 }
 
 .jp-text {
   font-family: 'Noto Sans JP', sans-serif;
-  color: #E8E8E8;
+  color: var(--zoro-text);
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .en-text {
@@ -288,9 +309,30 @@ svg.defs {
   color: rgba(232, 232, 232, 0.8);
   font-size: 0.9rem;
   letter-spacing: 1px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Декоративные "концы" свитка */
+/* Ink reveal effect */
+.jp-text::before,
+.en-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, var(--zoro-dark) 50%, transparent 100%);
+  animation: inkReveal 1.5s ease-in forwards;
+}
+
+@keyframes inkReveal {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Decorative scroll ends */
 .scroll-ends {
   position: absolute;
   top: 0;
@@ -305,8 +347,8 @@ svg.defs {
   position: absolute;
   width: 30px;
   height: 10px;
-  background: #1A3A2F;
-  border: 1px solid #238B0000;
+  background: var(--zoro-green);
+  border: 1px solid var(--zoro-blood);
 }
 
 .scroll-ends::before {
@@ -324,15 +366,8 @@ svg.defs {
 }
 
 @keyframes sway {
-
-  0%,
-  100% {
-    transform: translateY(-50%) rotate(0.5deg);
-  }
-
-  50% {
-    transform: translateY(-50%) rotate(-0.5deg);
-  }
+  0%, 100% { transform: translateY(-50%) rotate(0.5deg); }
+  50% { transform: translateY(-50%) rotate(-0.5deg); }
 }
 
 /* Media queries */
@@ -348,12 +383,21 @@ svg.defs {
   .blood-drop {
     display: none;
   }
+
+  .quote-scroll {
+    display: none; /* Hide scroll on mobile */
+  }
+
+  /* Show logo when mobile menu is open */
+  .mobile-menu-open .header-logo {
+    display: flex;
+  }
 }
 
 @media (min-width: 769px) {
-
   .burger-button,
-  .mobile-menu {
-    display: none !important;
+  .mobile-menu,
+  .header-logo {
+    display: none !important; /* Hide logo and mobile menu on desktop */
   }
 }

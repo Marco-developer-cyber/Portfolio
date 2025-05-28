@@ -3,6 +3,7 @@ import { Header } from './Components/Header';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Howl } from 'howler';
 import { useState, useRef } from 'react';
+// import SwordModel from './Components/SwordModel';
 
 // Хук для звуков меча
 const useSwordSound = () => {
@@ -71,6 +72,9 @@ function Menu() {
         </AnimatePresence>
 
         <Header onSlash={handleSlash} onMobileViewChange={setIsMobileView} isSlashing={isSlashing} />
+        {/* <SwordModel isSlashing={isSlashing} /> */}
+
+        {/* Фон с анимацией */}
       </div>
   );
 }
